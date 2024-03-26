@@ -232,8 +232,18 @@
       {
         method: "POST",
         body: JSON.stringify({
-          name: nameInputElement.value,
-          text: commitInputElement.value,
+          name: nameInputElement.value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;"),
+          text: commitInputElement.value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("%BEGIN_QUOTE", "<div class='quote'>")
+          .replaceAll("END_QUOTE%", "</div>"),
         })
       }
     ).then(() => {
