@@ -9,6 +9,7 @@
 
 <body>
   <div class="container">
+    <span id="loader">Загрузка комментариев....</span>
     <ul id="list" class="comments">
       <!-- Список рендерится из JS -->
     </ul>
@@ -32,6 +33,7 @@
   const listElement = document.querySelector('.comments');
   const nameInputElement = document.querySelector('.add-form-name');
   const commitInputElement = document.querySelector('.add-form-text');
+  const loadElement = document.getElementById('loader');
   const lastCommentDeleteButton = document.querySelector('.delete-last-comment');
   const likeButtonElements = document.querySelectorAll('.like-button');
   massageSendButton.disabled = true;
@@ -63,6 +65,7 @@
         });
         comments = appComments;
         renderComments();
+        loadElement.classList.add('hide');
       });
   };
   getComments();
@@ -232,18 +235,8 @@
       {
         method: "POST",
         body: JSON.stringify({
-          name: nameInputElement.value
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;"),
-          text: commitInputElement.value
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("%BEGIN_QUOTE", "<div class='quote'>")
-          .replaceAll("END_QUOTE%", "</div>"),
+          name: nameInputElement.value,
+          text: commitInputElement.value,
         })
       }
     ).then(() => {
