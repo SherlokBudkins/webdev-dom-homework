@@ -235,8 +235,14 @@
       {
         method: "POST",
         body: JSON.stringify({
-          name: nameInputElement.value,
-          text: commitInputElement.value,
+          name: nameInputElement.value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;"),
+          text: commitInputElement.value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;"),
         })
       }
     ).then(() => {
@@ -251,7 +257,6 @@
     nameInputElement.classList.remove("errorinput");
     commitInputElement.classList.remove("errorinput");
 
-    renderComments();
 
   };
 
