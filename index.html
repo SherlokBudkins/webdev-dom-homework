@@ -50,6 +50,12 @@
         method: "GET"
       }
     )
+    .then((response) => {
+      if (response.status === 500) {
+        throw new Error("Сервер сломался");
+      }
+      return response.json();
+    })
       .then((response) => {
         return response.json();
       })
@@ -66,7 +72,13 @@
         comments = appComments;
         renderComments();
         loadElement.classList.add('hide');
-      });
+      })
+      .catch((error) => {
+      if (error.message === "Сервер сломался") {
+        alert("Сервер сломался, попробуй позже");
+        return;
+      }
+    });
   };
   getComments();
 
@@ -245,9 +257,39 @@
           .replaceAll(">", "&gt;"),
         })
       }
-    ).then(() => {
+    )
+    .then((response) => {
+      if (response.status === 400 && (nameInputElement.value.length < 3 || commitInputElement.value.length < 3)) {
+      throw new Error("Некорректный запрос");
+       }
+      if (response.status === 500) {
+        throw new Error("Сервер сломался");
+      }
+      else {
+        return response.json();
+      }
+      })
+    .then(() => {
       return getComments();
-    }).then(() => {
+    })
+    .catch((error) => {
+        if (error.message === "Сервер сломался") {
+        alert("Сервер сломался, попробуй позже");
+        nameInputElement.value;
+        commitInputElement.value;
+        return;
+      } if (error.message === "Некорректный запрос") {
+        alert("Имя и комментарий должны быть не короче 3 символов");
+        nameInputElement.value;
+        commitInputElement.value;
+      }
+       if (error instanceof TypeError) {
+       alert("Кажется, у вас сломался интернет, попробуйте позже");
+       return;
+      }
+      console.log(error);
+      })
+    .then(() => {
       massageSendButton.disabled = false;
       massageSendButton.textContent = 'Написать';
     })
