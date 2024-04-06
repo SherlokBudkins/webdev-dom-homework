@@ -50,9 +50,12 @@
         method: "GET"
       }
     )
-      .then((response) => {
-        return response.json();
-      })
+    .then((response) => {
+      if (response.status === 500) {
+        throw new Error("Сервер сломался");
+      }
+      return response.json();
+    })
       .then((responseData) => {
         const appComments = responseData.comments.map((comment) => {
           return {
@@ -67,12 +70,6 @@
         renderComments();
         loadElement.classList.add('hide');
       })
-      .then((response) => {
-      if (response.status === 500) {
-        throw new Error("Сервер сломался");
-      }
-      return response.json();
-    })
       .catch((error) => {
       if (error.message === "Сервер сломался") {
         alert("Сервер сломался, попробуй позже");
@@ -259,7 +256,7 @@
       }
     )
     .then((response) => {
-      if (response.status === 400 && (nameInputElement.value.length < 3 || commitInputElement.value.length < 3)) {
+      if (response.status === 400) {
       throw new Error("Некорректный запрос");
        }
       if (response.status === 500) {
@@ -294,11 +291,14 @@
       massageSendButton.textContent = 'Написать';
     })
     //Очистка форм input
+    .then((response) => {
+      if(response.status === 200) {
     nameInputElement.value = "";
     commitInputElement.value = "";
     nameInputElement.classList.remove("errorinput");
     commitInputElement.classList.remove("errorinput");
-
+  }
+  })
 
   };
 
