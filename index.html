@@ -71,10 +71,11 @@
         loadElement.classList.add('hide');
       })
       .catch((error) => {
-      if (error.message === "Сервер сломался") {
-        alert("Сервер сломался, попробуй позже");
-        return;
+        if (error instanceof TypeError) {
+       alert("Кажется, у вас сломался интернет, попробуйте позже");
+       return;
       }
+        alert('Произошла ошибка при загрузке данных: ' + error.message);
     });
   };
   getComments();
@@ -266,9 +267,15 @@
         return response.json();
       }
       })
+      //Очистка форм input
     .then(() => {
+      nameInputElement.value = "";
+      commitInputElement.value = "";
+      nameInputElement.classList.remove("errorinput");
+      commitInputElement.classList.remove("errorinput");
       return getComments();
     })
+    
     .catch((error) => {
         if (error.message === "Сервер сломался") {
         alert("Сервер сломался, попробуй позже");
@@ -290,15 +297,10 @@
       massageSendButton.disabled = false;
       massageSendButton.textContent = 'Написать';
     })
-    //Очистка форм input
-    .then((response) => {
-      if(response.status === 200) {
-    nameInputElement.value = "";
-    commitInputElement.value = "";
-    nameInputElement.classList.remove("errorinput");
-    commitInputElement.classList.remove("errorinput");
-  }
-  })
+    
+    
+   
+  
 
   };
 
