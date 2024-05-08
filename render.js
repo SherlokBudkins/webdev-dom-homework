@@ -1,6 +1,5 @@
 import { likeButtonListners } from "./likebutton.js";
 import { comments } from "./api.js";
-export const likeButtonElements = document.querySelectorAll('.like-button');
 export const listElement = document.querySelector('.comments');
 
 export const renderComments = () => {
