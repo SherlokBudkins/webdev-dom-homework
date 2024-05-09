@@ -56,22 +56,18 @@ export const quoteElementsListners = () => {
   }
 }
 
-export const massageSendListners = (massageSendButton, addComment) => {
+export const massageSendListners = (massageSendButton, {addComment}) => {
   return massageSendButton.addEventListener("click", addComment);
-
+  
 }
 
 
 
-
-
-
-//Не работает
-export const lastCommentDelete = (lastCommentDeleteButton, comments, renderComments) => {
-    lastCommentDeleteButton.addEventListener("click", () => {
-      if (comments.length > 0) {
-        comments.pop();
-        renderComments({comments});
-      }
-    })
-  };
+export const lastCommentDelete = (lastCommentDeleteButton) => {
+  lastCommentDeleteButton.addEventListener("click", () => {
+    if (comments.length > 0) {
+      comments.pop();
+      renderComments({ comments });
+    }
+  });
+};

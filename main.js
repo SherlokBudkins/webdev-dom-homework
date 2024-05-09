@@ -18,7 +18,7 @@ massageSendButton.disabled = true;
   enableButtonOnInput(nameInputElement, massageSendButton);
   enableButtonOnInput(commitInputElement, massageSendButton);
 
-  lastCommentDelete(lastCommentDeleteButton, comments, renderComments);
+  lastCommentDelete(lastCommentDeleteButton);
 
   editButtonListners();
 
@@ -26,4 +26,4 @@ massageSendButton.disabled = true;
 
   quoteElementsListners();
 
-  massageSendListners({addComment});
+  massageSendListners(massageSendButton, {addComment});
