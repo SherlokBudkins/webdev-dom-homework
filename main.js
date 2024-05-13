@@ -1,15 +1,24 @@
 import { comments, getComments } from "./api.js";
 import { addComment } from "./api.js";
-import { renderComments } from "./render.js";
 import { nameInputElement, commitInputElement } from "./api.js";
-import { setInputValidation, lastCommentDelete, lastCommentDeleteButton, massageSendButton, massageSendListners, enableButtonOnInput, editButtonListners, doneButtonListners, quoteElementsListners } from "./other.js";
+import { lastCommentDelete } from "./lastCommentDelete.js";
+import { massageSendListners } from "./massageSendListners.js";
+import { quoteElementsListners } from "./quoteElementsListners.js";
+import { doneButtonListners } from "./doneButtonListners.js";
+import { editButtonListners } from "./editButtonListners.js";
+import { enableButtonOnInput } from "./enableButtonOnInput.js";
+import { setInputValidation } from "./setInputValidation.js";
+import { massageSendButton } from "./api.js";
+import { lastCommentDeleteButton } from "./lastCommentDelete.js";
 
 
 massageSendButton.disabled = true;
 
 
+
+
   getComments();
-  renderComments({comments});
+
 
   //Условное ветвление отрабатывает невозможность ввода первой буквы в виде пробела
   setInputValidation(nameInputElement);

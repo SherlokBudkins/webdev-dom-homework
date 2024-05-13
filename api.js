@@ -1,4 +1,5 @@
 import { renderComments } from "./render.js";
+import { validateInputAndSendMessage } from "./validateInputAndSendMessage.js";
 export const nameInputElement = document.querySelector('.add-form-name');
 export const commitInputElement = document.querySelector('.add-form-text');
 export const loadElement = document.getElementById('loader');
@@ -45,24 +46,6 @@ export function getComments() {
 
 
   export function addComment() {
-
-
-    //Обработчик клика и проверка ввода
-    if (nameInputElement.value === "" && commitInputElement.value === "") {
-      nameInputElement.classList.add("errorinput");
-      commitInputElement.classList.add("errorinput");
-      return
-    } else if (nameInputElement.value === "") {
-      nameInputElement.classList.add("errorinput");
-      return
-    } else if (commitInputElement.value === "") {
-      commitInputElement.classList.add("errorinput");
-      return
-    }
-
-    //Вввод нового комментария
-    massageSendButton.disabled = true;
-    massageSendButton.textContent = 'Ждите....';
 
     //Функция добавлений данных на сервер
     fetch(
@@ -122,4 +105,5 @@ export function getComments() {
       massageSendButton.disabled = false;
       massageSendButton.textContent = 'Написать';
     })
+    validateInputAndSendMessage();
   };
