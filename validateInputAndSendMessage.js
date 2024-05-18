@@ -1,6 +1,5 @@
 import { addComment, nameInputElement } from "./api.js";
 import { commitInputElement } from "./api.js";
-import { massageSendButton } from "./api.js";
 
 export function validateInputAndSendMessage() {
     
@@ -16,8 +15,4 @@ export function validateInputAndSendMessage() {
         commitInputElement.classList.add("errorinput");
         return
       }
-  
-      //Вввод нового комментария
-      massageSendButton.disabled = true;
-      massageSendButton.textContent = 'Ждите....';
     }

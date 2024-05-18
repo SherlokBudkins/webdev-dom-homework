@@ -1,9 +1,7 @@
 import { renderComments } from "./render.js";
-import { validateInputAndSendMessage } from "./validateInputAndSendMessage.js";
 export const nameInputElement = document.querySelector('.add-form-name');
 export const commitInputElement = document.querySelector('.add-form-text');
 export const loadElement = document.getElementById('loader');
-export const massageSendButton = document.querySelector('.add-form-button');
 export let comments = [];
 
 //Функция получения и преобразования данных с сервера
@@ -48,7 +46,7 @@ export function getComments() {
   export function addComment() {
 
     //Функция добавлений данных на сервер
-    fetch(
+    return fetch(
       'https://wedev-api.sky.pro/api/v1/anna-terenteva/comments',
       {
         method: "POST",
@@ -75,35 +73,5 @@ export function getComments() {
         return response.json();
       }
       })
-      //Очистка форм input
-    .then(() => {
-      nameInputElement.value = "";
-      commitInputElement.value = "";
-      nameInputElement.classList.remove("errorinput");
-      commitInputElement.classList.remove("errorinput");
-      return getComments();
-    })
-    
-    .catch((error) => {
-        if (error.message === "Сервер сломался") {
-        alert("Сервер сломался, попробуй позже");
-        nameInputElement.value;
-        commitInputElement.value;
-        return;
-      } if (error.message === "Некорректный запрос") {
-        alert("Имя и комментарий должны быть не короче 3 символов");
-        nameInputElement.value;
-        commitInputElement.value;
-      }
-       if (error instanceof TypeError) {
-       alert("Кажется, у вас сломался интернет, попробуйте позже");
-       return;
-      }
-      console.log(error);
-      })
-    .then(() => {
-      massageSendButton.disabled = false;
-      massageSendButton.textContent = 'Написать';
-    })
-    validateInputAndSendMessage();
+
   };
