@@ -9,10 +9,12 @@ export const sendValidation = () => {
   massageSendButton.addEventListener("click", validateInputAndSendMessage());
 }
 
+
 export const massageSendListners = () => {
   massageSendButton.addEventListener('click', () => {
+
     massageSendButton.disabled = true;
-    massageSendButton.textContent = 'Ждите....'; 
+    massageSendButton.textContent = 'Ждите....';
 
     addComment()
     .then(() => {
@@ -44,5 +46,9 @@ export const massageSendListners = () => {
       }
       console.log(error);
       })
+      .finally(() => {
+        massageSendButton.disabled = false;
+        massageSendButton.textContent = 'Написать';
+      });
   });
 };
