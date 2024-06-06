@@ -1,16 +1,23 @@
 import { renderComments } from "./render.js";
-export const nameInputElement = document.querySelector('.add-form-name');
-export const commitInputElement = document.querySelector('.add-form-text');
 export const loadElement = document.getElementById('loader');
 export let comments = [];
+
+const host = 'https://wedev-api.sky.pro/api/v2/anna-terenteva/comments';
+const userHost = 'https://wedev-api.sky.pro/api/user/login';
+const authHost = 'https://wedev-api.sky.pro/api/user';
+export let token;
+export const setToken = (newToken) => {
+  token = newToken;
+};
 
 //Функция получения и преобразования данных с сервера
 
 export function getComments() {
     return fetch(
-      'https://wedev-api.sky.pro/api/v1/anna-terenteva/comments',
+      host,
       {
-        method: "GET"
+        method: "GET",
+        forceError: true,
       }
     )
     .then((response) => {
@@ -43,23 +50,27 @@ export function getComments() {
   };
 
 
-  export function addComment() {
+  export function addComment(name, text) {
 
     //Функция добавлений данных на сервер
     return fetch(
-      'https://wedev-api.sky.pro/api/v1/anna-terenteva/comments',
+      host,
       {
         method: "POST",
         body: JSON.stringify({
-          name: nameInputElement.value
+          name: name
           .replaceAll("&", "&amp;")
           .replaceAll("<", "&lt;")
           .replaceAll(">", "&gt;"),
-          text: commitInputElement.value
+          text: text
           .replaceAll("&", "&amp;")
           .replaceAll("<", "&lt;")
           .replaceAll(">", "&gt;"),
-        })
+        }),
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        forceError: true,
       }
     )
     .then((response) => {
@@ -74,4 +85,45 @@ export function getComments() {
       }
       })
 
+  };
+
+  export function authUser({ login, password }) {
+    return fetch(userHost,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          login: login.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+          password: password.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        }),
+        forceError: true,
+      }).then((response) => {
+        if (response.status === 500) {
+          throw new Error("Сервер упал");
+        } else if (response.status === 400) {
+          throw new Error('Нет авторизации');
+        } else {
+          return response.json();
+        }
+      });
+  };
+  
+  export function regUser({ name, login, password }) {
+    return fetch(authHost,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          name: name.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+          login: login.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+          password: password.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        }),
+        forceError: true,
+      }).then((response) => {
+        if (response.status === 500) {
+          throw new Error("Сервер упал");
+        } else if (response.status === 400) {
+          throw new Error('Ошибка авторизации');
+        } else {
+          return response.json();
+        }
+      });
   };

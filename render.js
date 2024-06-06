@@ -1,8 +1,9 @@
 import { likeButtonListners } from "./likebutton.js";
 import { comments } from "./api.js";
-export const listElement = document.querySelector('.comments');
+
 
 export const renderComments = () => {
+    const listElement = document.querySelector('.comments');
     const commentsHtml = comments.map((comment, index) => {
       let activeLikeClass;
       if (comments[index].isLiked === true) {

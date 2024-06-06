@@ -1,22 +1,21 @@
 import { addComment, getComments } from "./api.js";
-import { nameInputElement, commitInputElement } from "./api.js";
-import { validateInputAndSendMessage } from "./validateInputAndSendMessage.js";
-
-export const massageSendButton = document.querySelector('.add-form-button');
 
 
-export const sendValidation = () => {
-  massageSendButton.addEventListener("click", validateInputAndSendMessage());
-}
+
 
 
 export const massageSendListners = () => {
+  const massageSendButton = document.querySelector('.add-form-button');
+  const nameInputElement = document.querySelector('.add-form-name');
+  const commitInputElement = document.querySelector('.add-form-text');
+
   massageSendButton.addEventListener('click', () => {
+
 
     massageSendButton.disabled = true;
     massageSendButton.textContent = 'Ждите....';
 
-    addComment()
+    addComment(nameInputElement.value, commitInputElement.value)
     .then(() => {
       nameInputElement.value = "";
       commitInputElement.value = "";
