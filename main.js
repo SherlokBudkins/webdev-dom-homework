@@ -20,7 +20,8 @@ export function setUser(value) {
   user = value;
 }
 
-
+const nameInputElement = document.querySelector('.add-form-name');
+const commitInputElement = document.querySelector('.add-form-text');
 
 
 export function renderApp() {
