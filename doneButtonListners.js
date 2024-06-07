@@ -1,6 +1,8 @@
 import { comments } from "./api.js";
+import { user } from "./main.js";
 
 export const doneButtonListners = () => {
+  if(!user) return;
     const doneButtonElements = document.querySelectorAll(".done");
     for (const doneButtonElement of doneButtonElements) {
       doneButtonElement.addEventListener("click", (event) => {
