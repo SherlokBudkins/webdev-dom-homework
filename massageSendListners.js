@@ -6,11 +6,11 @@ import { addComment, getComments } from "./api.js";
 
 export const massageSendListners = () => {
   const massageSendButton = document.querySelector('.add-form-button');
-  const nameInputElement = document.querySelector('.add-form-name');
-  const commitInputElement = document.querySelector('.add-form-text');
+
 
   massageSendButton.addEventListener('click', () => {
-
+    const nameInputElement = document.querySelector('.input-form');
+    const commitInputElement = document.querySelector('.text-area-form');
 
     massageSendButton.disabled = true;
     massageSendButton.textContent = 'Ждите....';
